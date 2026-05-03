@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Extract changelog entry
+        id: changelog
+        run: |
+          # Pull the section for this version out of CHANGELOG.md
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          # Strip leading 'v' to match changelog heading format (e.g. v1.0.0 -> 1.0.0)
+          VERSION_BARE="${VERSION#v}"
+          NOTES=$(awk "/^## \[${VERSION_BARE}\]/{found=1; next} /^## \[/{found=0} found" CHANGELOG.md)
+          echo "NOTES<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create release archive
+        run: |
+          zip owntracks-login-alert-${{ steps.version.outputs.VERSION }}.zip \
+            owntracks-login-alert-worker.js \
+            README.md \
+            CHANGELOG.md \
+            LICENSE
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          name: owntracks-login-alert ${{ steps.version.outputs.VERSION }}
+          body: ${{ steps.changelog.outputs.NOTES }}
+          files: owntracks-login-alert-${{ steps.version.outputs.VERSION }}.zip
+          draft: false
+          prerelease: false
