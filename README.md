@@ -42,7 +42,7 @@ Name it `IP_STORE`.
 
 **Workers & Pages → Create → Create Worker**
 
-Paste the contents of `worker.js` into the editor and deploy.
+Paste the contents of `owntracks-login-alert-worker.js` into the editor and deploy.
 
 ### 3. Bind the KV Namespace
 
@@ -75,7 +75,7 @@ Add the following as type **Secret** (not plain text variable):
 
 ## Configuration
 
-The following constants at the top of `worker.js` can be adjusted to suit your setup:
+The following constants at the top of `owntracks-login-alert-worker.js` can be adjusted to suit your setup:
 
 ```js
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000; // Re-alert cooldown for normal scenarios
@@ -148,6 +148,10 @@ Each IP+scenario combination is stored as a JSON object:
 ```
 
 Keys follow the format `ip:<address>:<scenario>` where scenario is one of `outside`, `alberta`, or `failed`.
+
+## Releases
+
+See [CHANGELOG.md](CHANGELOG.md) for the full version history. Releases are tagged `vX.Y.Z` on `main` and the [release workflow](.github/workflows/release.yml) creates a GitHub Release with a zipped bundle of the worker, README, CHANGELOG, and LICENSE attached.
 
 ## Contributing
 
