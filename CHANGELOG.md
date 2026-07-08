@@ -8,15 +8,15 @@ All notable changes to this project will be documented in this file.
 
 - Initial release
 - Cloudflare Worker monitors all `GET /owntracks/*` requests for HTTP Basic Auth attempts
-- IP geolocation using Cloudflare's built-in `request.cf` object — country, region, city, lat/lon, timezone, ASN, and organization
+- IP geolocation using Cloudflare's built-in `request.cf` object - country, region, city, lat/lon, timezone, ASN, and organization
 - Three independent alert scenarios tracked per IP in Cloudflare KV:
   - Successful login from outside home region (1-day cooldown, high priority)
   - Successful login from home region (30-day cooldown, normal priority)
   - Failed login (30-day cooldown, normal priority)
 - Per-scenario KV keys so cooldown timers are fully independent for the same IP across scenarios
 - Email alerting via SMTP2GO API with `text_body`, scenario-specific subjects, and `custom_headers` for high priority (`X-Priority`, `X-MSMail-Priority`, `Importance`)
-- Six distinct email subject line variants covering new/re-alert × success-outside/success-local/failed
-- Pass-through architecture — worker never blocks or modifies origin requests
+- Six distinct email subject line variants covering new/re-alert x success-outside/success-local/failed
+- Pass-through architecture - worker never blocks or modifies origin requests
 - `event.waitUntil()` used for background alert processing to avoid adding latency to the response
 - KV writes only occur on successful email send to prevent false suppression on API failures
 - Structured `console.log` output at every decision point for real-time log stream debugging:
@@ -30,6 +30,6 @@ All notable changes to this project will be documented in this file.
 
 ### Technical Notes
 
-- Written in service worker format (`addEventListener("fetch", ...)`) for compatibility with the Cloudflare dashboard editor — does not require Wrangler CLI to deploy
+- Written in service worker format (`addEventListener("fetch", ...)`) for compatibility with the Cloudflare dashboard editor - does not require Wrangler CLI to deploy
 - Secrets (`SMTP2GO_API_KEY`, `ALERT_TO_EMAIL`, `ALERT_FROM_EMAIL`) and KV binding (`IP_STORE`) accessed as globals per service worker convention
-- Home region check defaults to Alberta (`AB`) — configurable via `regionCode` comparison in `handleLoginAttempt`
+- Home region check defaults to Alberta (`AB`) - configurable via `regionCode` comparison in `handleLoginAttempt`

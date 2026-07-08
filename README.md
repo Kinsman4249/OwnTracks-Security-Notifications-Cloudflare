@@ -5,23 +5,23 @@ A Cloudflare Worker that monitors HTTP Basic Auth login attempts to an [OwnTrack
 ## Features
 
 - Detects login attempts (both successful and failed) using the `Authorization` header on `GET /owntracks/*`
-- Geolocates connecting IPs using Cloudflare's built-in `request.cf` data — no external geo API required
+- Geolocates connecting IPs using Cloudflare's built-in `request.cf` data - no external geo API required
 - Tracks seen IPs in Cloudflare KV with per-scenario cooldowns
 - Sends email alerts via the SMTP2GO API with scenario-specific subjects and priority headers
-- Fully pass-through — never blocks or modifies requests to your origin
+- Fully pass-through - never blocks or modifies requests to your origin
 - Structured `console.log` output throughout for easy debugging via Cloudflare's real-time log stream
 
 ## Alert Scenarios
 
 | Scenario | Cooldown | Priority |
 |---|---|---|
-| Successful login from outside your home region | 1 day | ⚠️ High |
+| Successful login from outside your home region | 1 day | High |
 | Successful login from your home region | 30 days | Normal |
 | Failed login (any location) | 30 days | Normal |
 
 > The region check is currently hardcoded to Alberta (`AB`). See [Configuration](#configuration) to change it.
 
-Each scenario is tracked independently in KV — a failed login and a successful login from the same IP do not share a cooldown.
+Each scenario is tracked independently in KV - a failed login and a successful login from the same IP do not share a cooldown.
 
 ## Requirements
 
@@ -34,19 +34,19 @@ Each scenario is tracked independently in KV — a failed login and a successful
 
 ### 1. Create the KV Namespace
 
-In the Cloudflare dashboard: **Workers & Pages → KV → Create namespace**
+In the Cloudflare dashboard: **Workers & Pages -> KV -> Create namespace**
 
 Name it `IP_STORE`.
 
 ### 2. Create the Worker
 
-**Workers & Pages → Create → Create Worker**
+**Workers & Pages -> Create -> Create Worker**
 
 Paste the contents of `owntracks-login-alert-worker.js` into the editor and deploy.
 
 ### 3. Bind the KV Namespace
 
-**Worker → Settings → Bindings → Add binding**
+**Worker -> Settings -> Bindings -> Add binding**
 
 - Type: KV Namespace
 - Variable name: `IP_STORE`
@@ -54,7 +54,7 @@ Paste the contents of `owntracks-login-alert-worker.js` into the editor and depl
 
 ### 4. Set Secrets
 
-**Worker → Settings → Variables and Secrets**
+**Worker -> Settings -> Variables and Secrets**
 
 Add the following as type **Secret** (not plain text variable):
 
@@ -66,7 +66,7 @@ Add the following as type **Secret** (not plain text variable):
 
 ### 5. Add the Worker Route
 
-**Your domain → Workers Routes → Add route**
+**Your domain -> Workers Routes -> Add route**
 
 - Pattern: `your-hostname.example.com/owntracks/*`
 - Worker: select your worker
@@ -123,7 +123,7 @@ Subject: ⚠️ [OwnTracks] URGENT - Successful login from outside Alberta: 2001
 
 ## Debugging
 
-Enable real-time logs in the Cloudflare dashboard under **Workers & Pages → your worker → Logs → Start Log Stream**, then trigger a login. Every request logs:
+Enable real-time logs in the Cloudflare dashboard under **Workers & Pages -> your worker -> Logs -> Start Log Stream**, then trigger a login. Every request logs:
 
 - Method, path, response status, and whether an `Authorization` header was present
 - IP, region, scenario, and priority classification
@@ -163,4 +163,4 @@ To report a security vulnerability, see [SECURITY.md](SECURITY.md). Please do no
 
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE).
+Apache 2.0 - see [LICENSE](LICENSE).

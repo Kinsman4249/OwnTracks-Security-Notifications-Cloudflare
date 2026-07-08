@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-This project is at version 1.0 or later. Because this is a small project, **only the newest major release line** receives security updates. Once a new major version is published, the previous major version is no longer supported — please plan to upgrade.
+This project is at version 1.0 or later. Because this is a small project, **only the newest major release line** receives security updates. Once a new major version is published, the previous major version is no longer supported - please plan to upgrade.
 
 | Version                              | Supported          |
 | ------------------------------------ | ------------------ |
@@ -38,9 +38,9 @@ In-scope:
 
 Out of scope:
 
-- Vulnerabilities in the OwnTracks Frontend or backend itself — please report those to the [OwnTracks project](https://github.com/owntracks)
-- Vulnerabilities in Cloudflare Workers, KV, or the Cloudflare platform — report those to Cloudflare's security team
-- Vulnerabilities in SMTP2GO — report those to SMTP2GO directly
+- Vulnerabilities in the OwnTracks Frontend or backend itself - please report those to the [OwnTracks project](https://github.com/owntracks)
+- Vulnerabilities in Cloudflare Workers, KV, or the Cloudflare platform - report those to Cloudflare's security team
+- Vulnerabilities in SMTP2GO - report those to SMTP2GO directly
 - General hardening suggestions for your own OwnTracks deployment (use a feature request issue instead)
 
 ## Note on the project's purpose

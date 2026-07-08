@@ -12,7 +12,7 @@ assignees: ''
 
 ## What you expected to happen
 
-<!-- Describe the expected behavior — what email should have been sent, what KV
+<!-- Describe the expected behavior - what email should have been sent, what KV
      record should have been written, etc. -->
 
 ## Steps to reproduce

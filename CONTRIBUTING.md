@@ -14,12 +14,12 @@ Open an issue using the **Bug report** template. Please include:
 
 ## How to propose a feature
 
-Open an issue using the **Feature request** template. Describe the use case before the implementation — knowing *why* is more useful than *what* in early discussion.
+Open an issue using the **Feature request** template. Describe the use case before the implementation - knowing *why* is more useful than *what* in early discussion.
 
 ## How to submit a change
 
 1. **Fork** the repo and create a feature branch (`git checkout -b feat/short-description`).
-2. **Make your change.** Keep changes focused — one logical change per PR.
+2. **Make your change.** Keep changes focused - one logical change per PR.
 3. **Test it.**
    - Deploy the Worker to a staging route and trigger login attempts from at least three IPs: one inside your home region (success), one outside (success), and one with bad credentials (failure). Confirm the appropriate email is sent for each scenario, and that re-running the same scenario within the cooldown window does NOT send a duplicate email.
    - Inspect the KV namespace to confirm records are written with the expected key shape and JSON structure.
@@ -32,7 +32,7 @@ Open an issue using the **Feature request** template. Describe the use case befo
 - **JavaScript / Workers runtime:** target the Cloudflare Workers runtime (modern V8 + Web APIs). Avoid Node-only APIs (`fs`, `process`, etc.).
 - **Async/await everywhere.** No raw `.then()` chains except where genuinely clearer.
 - **Comments explain *why*, not *what*.** The diff already shows what.
-- **No new dependencies** without strong justification — the appeal of this project is that it's a single-file Worker with no build step.
+- **No new dependencies** without strong justification - the appeal of this project is that it's a single-file Worker with no build step.
 - **No telemetry, ever.** This is a security tool. It must not phone home.
 - **Secrets stay in Worker secrets**, never hardcoded, never committed. The `.gitignore` excludes `.dev.vars`; double-check before pushing.
 
